@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENDLSS - Klädbutik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Stil för att visa pilar på sidorna */
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .scroll-left {
+            left: 0;
+        }
+        .scroll-right {
+            right: 0;
+        }
+        .product-item:hover .add-to-cart-btn {
+            display: block;
+        }
+        .add-to-cart-btn {
+            display: none;
+        }
+        .search-popup {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .search-popup p {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .search-popup p:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4 flex justify-between items-center text-white">
+        <div class="flex items-center">
+            <h1 class="text-3xl font-bold animate-bounce"><a href="#">ENDLSS</a></h1>
+        </div>
+        <ul class="flex space-x-6">
+            <li><a href="#" class="hover:text-gray-300">Hem</a></li>
+            <li><a href="#about" class="hover:text-gray-300">Om oss</a></li>
+            <li><a href="#contact" class="hover:text-gray-300">Kontakt</a></li>
+            <li><a href="#faq" class="hover:text-gray-300">FAQ</a></li>
+            <li><a href="javascript:void(0)" onclick="openCart()" class="hover:text-gray-300">Varukorg (<span id="cart-count">0</span>)</a></li>
+        </ul>
+        <div class="relative">
+            <input type="text" id="search-bar" placeholder="Sök..." class="px-4 py-2 rounded-full text-black" oninput="searchProducts()">
+            <div id="search-popup" class="search-popup hidden"></div>
+            <p id="search-message" class="text-gray-700 mt-2"></p>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-cover bg-center h-64" style="background-image: url('https://via.placeholder.com/1500x500');">
+        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="text-center text-white">
+                <h2 class="text-4xl font-bold">Upptäck det senaste modet från ENDLSS</h2>
+                <p class="mt-4">Stil, komfort och hållbarhet i varje plagg</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Om Märket -->
+    <section id="about" class="container mx-auto mt-8 text-center">
+        <h3 class="text-2xl font-bold mb-4">Om ENDLSS</h3>
+        <p class="text-gray-700 max-w-3xl mx-auto">
+            ENDLSS är ett märke som fokuserar på att erbjuda högkvalitativa och hållbara kläder för alla tillfällen.
+            Vårt mål är att skapa tidlösa plagg som kombinerar stil och komfort för den moderna människan.
+        </p>
+    </section>
+
+    <!-- Produkter Horisontell Scroll -->
+    <section class="container mx-auto mt-8 relative">
+        <h3 class="text-2xl font-bold text-center mb-6">Våra Produkter</h3>
+
+        <!-- Vänster och höger scroll knappar -->
+        <button class="scroll-btn scroll-left" onclick="scrollLeft()">◀</button>
+        <button class="scroll-btn scroll-right" onclick="scrollRight()">▶</button>
+
+        <div class="flex overflow-x-scroll space-x-4 p-4" id="product-container">
+            <!-- Produkt 1 -->
+            <div class="bg-white shadow-md rounded-lg w-60 flex-shrink-0 product-item" data-name="T-shirt" onclick="openProductDetail('T-shirt', 299, 'Blå', ['https://via.placeholder.com/300', 'https://via.placeholder.com/300', 'https://via.placeholder.com/300'])">
+                <img src="https://via.placeholder.com/150" alt="T-shirt" class="w-full h-48 object-cover rounded-md">
+                <h4 class="text-xl font-bold mt-4 p-2">T-shirt</h4>
+                <p class="text-gray-700 px-2">Färg: Blå</p>
+                <p class="text-gray-700 px-2">Storlekar: S, M, L, XL</p>
+                <p class="text-gray-700 px-2 font-bold">Pris: 299 kr</p>
+                <button class="bg-gray-700 text-white px-4 py-2 mt-4 w-full add-to-cart-btn" onclick="event.stopPropagation(); addToCart('T-shirt', 299)">Lägg till i varukorg</button>
+            </div>
+            <!-- Produkt 2 -->
+            <div class="bg-white shadow-md rounded-lg w-60 flex-shrink-0 product-item" data-name="Jeans" onclick="openProductDetail('Jeans', 499, 'Svart', ['https://via.placeholder.com/300', 'https://via.placeholder.com/300', 'https://via.placeholder.com/300'])">
+                <img src="https://via.placeholder.com/150" alt="Jeans" class="w-full h-48 object-cover rounded-md">
+                <h4 class="text-xl font-bold mt-4 p-2">Jeans</h4>
+                <p class="text-gray-700 px-2">Färg: Svart</p>
+                <p class="text-gray-700 px-2">Storlekar: 30, 32, 34</p>
+                <p class="text-gray-700 px-2 font-bold">Pris: 499 kr</p>
+                <button class="bg-gray-700 text-white px-4 py-2 mt-4 w-full add-to-cart-btn" onclick="event.stopPropagation(); addToCart('Jeans', 499)">Lägg till i varukorg</button>
+            </div>
+            <!-- Produkt 3 -->
+            <div class="bg-white shadow-md rounded-lg w-60 flex-shrink-0 product-item" data-name="Jacka" onclick="openProductDetail('Jacka', 799, 'Grå', ['https://via.placeholder.com/300', 'https://via.placeholder.com/300', 'https://via.placeholder.com/300'])">
+                <img src="https://via.placeholder.com/150" alt="Jacka" class="w-full h-48 object-cover rounded-md">
+                <h4 class="text-xl font-bold mt-4 p-2">Jacka</h4>
+                <p class="text-gray-700 px-2">Färg: Grå</p>
+                <p class="text-gray-700 px-2">Storlekar: S, M, L</p>
+                <p class="text-gray-700 px-2 font-bold">Pris: 799 kr</p>
+                <button class="bg-gray-700 text-white px-4 py-2 mt-4 w-full add-to-cart-btn" onclick="event.stopPropagation(); addToCart('Jacka', 799)">Lägg till i varukorg</button>
+            </div>
+            <!-- Produkt 4 -->
+            <div class="bg-white shadow-md rounded-lg w-60 flex-shrink-0 product-item" data-name="Skor" onclick="openProductDetail('Skor', 699, 'Vit', ['https://via.placeholder.com/300', 'https://via.placeholder.com/300', 'https://via.placeholder.com/300'])">
+                <img src="https://via.placeholder.com/150" alt="Skor" class="w-full h-48 object-cover rounded-md">
+                <h4 class="text-xl font-bold mt-4 p-2">Skor</h4>
+                <p class="text-gray-700 px-2">Färg: Vit</p>
+                <p class="text-gray-700 px-2">Storlekar: 40, 42, 44</p>
+                <p class="text-gray-700 px-2 font-bold">Pris: 699 kr</p>
+                <button class="bg-gray-700 text-white px-4 py-2 mt-4 w-full add-to-cart-btn" onclick="event.stopPropagation(); addToCart('Skor', 699)">Lägg till i varukorg</button>
+            </div>
+            <!-- Produkt 5 -->
+            <div class="bg-white shadow-md rounded-lg w-60 flex-shrink-0 product-item" data-name="Mössa" onclick="openProductDetail('Mössa', 199, 'Röd', ['https://via.placeholder.com/300', 'https://via.placeholder.com/300', 'https://via.placeholder.com/300'])">
+                <img src="https://via.placeholder.com/150" alt="Mössa" class="w-full h-48 object-cover rounded-md">
+                <h4 class="text-xl font-bold mt-4 p-2">Mössa</h4>
+                <p class="text-gray-700 px-2">Färg: Röd</p>
+                <p class="text-gray-700 px-2">Storlekar: One Size</p>
+                <p class="text-gray-700 px-2 font-bold">Pris: 199 kr</p>
+                <button class="bg-gray-700 text-white px-4 py-2 mt-4 w-full add-to-cart-btn" onclick="event.stopPropagation(); addToCart('Mössa', 199)">Lägg till i varukorg</button>
+            </div>
+            <!-- Produkt 6 -->
+            <div class="bg-white shadow-md rounded-lg w-60 flex-shrink-0 product-item" data-name="Sweatshirt" onclick="openProductDetail('Sweatshirt', 399, 'Grön', ['https://via.placeholder.com/300', 'https://via.placeholder.com/300', 'https://via.placeholder.com/300'])">
+                <img src="https://via.placeholder.com/150" alt="Sweatshirt" class="w-full h-48 object-cover rounded-md">
+                <h4 class="text-xl font-bold mt-4 p-2">Sweatshirt</h4>
+                <p class="text-gray-700 px-2">Färg: Grön</p>
+                <p class="text-gray-700 px-2">Storlekar: S, M, L, XL</p>
+                <p class="text-gray-700 px-2 font-bold">Pris: 399 kr</p>
+                <button class="bg-gray-700 text-white px-4 py-2 mt-4 w-full add-to-cart-btn" onclick="event.stopPropagation(); addToCart('Sweatshirt', 399)">Lägg till i varukorg</button>
+            </div>
+            <!-- Fler produkter här, samma struktur -->
+        </div>
+    </section>
+
+    <!-- Produktdetalj Modal -->
+    <div id="product-detail-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg w-3/4 max-w-4xl">
+            <button class="text-red-500 text-2xl font-bold float-right" onclick="closeProductDetail()">&times;</button>
+            <div class="flex space-x-4">
+                <div id="product-images" class="w-1/2 flex space-x-2 overflow-x-scroll">
+                    <!-- Produktbilder kommer att läggas här dynamiskt -->
+                </div>
+                <div class="w-1/2">
+                    <h3 id="product-detail-name" class="text-2xl font-bold mb-4"></h3>
+                    <p id="product-detail-price" class="text-lg mb-4"></p>
+                    <p id="product-detail-color" class="text-lg mb-4"></p>
+                    <label for="product-size" class="block mb-2 font-bold">Välj storlek:</label>
+                    <select id="product-size" class="mb-4 p-2 border rounded">
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                    </select>
+                    <label for="product-color" class="block mb-2 font-bold">Välj färg:</label>
+                    <select id="product-color" class="mb-4 p-2 border rounded">
+                        <option value="Blå">Blå</option>
+                        <option value="Svart">Svart</option>
+                        <option value="Vit">Vit</option>
+                    </select>
+                    <button class="bg-gray-700 text-white px-4 py-2 mt-4 w-full" onclick="handlePurchase()">Handla</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center p-8 mt-8">
+        <div class="container mx-auto">
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="hover:text-gray-300">Facebook</a>
+                <a href="#" class="hover:text-gray-300">Instagram</a>
+                <a href="#" class="hover:text-gray-300">Twitter</a>
+            </div>
+            <div class="mt-4">
+                <p>Email: info@endlss.com</p>
+                <p id="contact">Adress: Storgatan 123, 111 22 Stockholm</p>
+            </div>
+            <div class="mt-4">
+                <p>© 2024 ENDLSS. Alla rättigheter förbehållna.</p>
+                <p>Webbsidan utvecklad av Web Dev Studios</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Varukorg Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center">
+        <div class="bg-white p-6 rounded-lg w-96">
+            <h3 class="text-2xl font-bold mb-4">Din Varukorg</h3>
+            <ul id="cart-items" class="mb-4">
+                <!-- Produkter i varukorgen kommer att läggas här dynamiskt -->
+            </ul>
+            <div class="flex justify-between font-bold text-lg mb-4">
+                <span>Totalt:</span>
+                <span id="cart-total">0 kr</span>
+            </div>
+            <a href="checkout.html" class="bg-[#800020] text-white px-4 py-2 rounded-md w-full mb-2 text-center block">Checka ut</a>
+            <button class="bg-gray-700 text-white px-4 py-2 rounded-md w-full" onclick="closeCart()">Stäng</button>
+        </div>
+    </div>
+
+    <script>
+        // Variabel för varukorgsdata
+        let cart = [];
+        let cartCountElement = document.getElementById('cart-count');
+
+        // Funktion för att lägga till produkt i varukorgen
+        function addToCart(product, price) {
+            cart.push({ product, price });
+            updateCartCount();
+            alert(product + " har lagts till i varukorgen.");
+        }
+
+        // Uppdatera varukorgsräknaren
+        function updateCartCount() {
+            cartCountElement.textContent = cart.length;
+        }
+
+        // Öppna varukorgsmodulen
+        function openCart() {
+            const cartModal = document.getElementById('cart-modal');
+            const cartItemsElement = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+
+            // Rensa tidigare varukorgsinnehåll
+            cartItemsElement.innerHTML = '';
+
+            // Lägg till varje produkt i varukorgen
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                const listItem = document.createElement('li');
+                listItem.classList.add('flex', 'justify-between', 'items-center', 'border-b', 'pb-2', 'mb-2');
+                listItem.innerHTML = `
+                    <span>${item.product} - ${item.price} kr</span>
+                    <button class="text-red-500" onclick="removeFromCart(${index})">&times;</button>
+                `;
+                cartItemsElement.appendChild(listItem);
+            });
+
+            // Uppdatera totalt pris
+            cartTotalElement.textContent = `${total} kr`;
+
+            // Visa varukorgsmodulen
+            cartModal.classList.remove('hidden');
+        }
+
+        // Stäng varukorgsmodulen
+        function closeCart() {
+            const cartModal = document.getElementById('cart-modal');
+            cartModal.classList.add('hidden');
+        }
+
+        // Ta bort produkt från varukorgen
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            openCart();
+        }
+
+        // Produktdetaljvy
+        function openProductDetail(name, price, color, images) {
+            const productDetailModal = document.getElementById('product-detail-modal');
+            const productImagesContainer = document.getElementById('product-images');
+            const productNameElement = document.getElementById('product-detail-name');
+            const productPriceElement = document.getElementById('product-detail-price');
+            const productColorElement = document.getElementById('product-detail-color');
+
+            // Sätt produktinformationen
+            productNameElement.textContent = name;
+            productPriceElement.textContent = `Pris: ${price} kr`;
+            productColorElement.textContent = `Färg: ${color}`;
+
+            // Rensa tidigare bilder och lägg till nya
+            productImagesContainer.innerHTML = '';
+            images.forEach(imgSrc => {
+                const imgElement = document.createElement('img');
+                imgElement.src = imgSrc;
+                imgElement.classList.add('w-32', 'h-32', 'object-cover', 'rounded-md');
+                productImagesContainer.appendChild(imgElement);
+            });
+
+            // Visa produktdetaljmodulen
+            productDetailModal.classList.remove('hidden');
+        }
+
+        function closeProductDetail() {
+            const productDetailModal = document.getElementById('product-detail-modal');
+            productDetailModal.classList.add('hidden');
+        }
+
+        // Stäng produktdetaljmodulen och lägg till produkten med valda alternativ
+        function handlePurchase() {
+            const productName = document.getElementById('product-detail-name').textContent;
+            const productSize = document.getElementById('product-size').value;
+            const productColor = document.getElementById('product-color').value;
+            const productPrice = parseInt(document.getElementById('product-detail-price').textContent.replace('Pris: ', '').replace(' kr', ''));
+
+            const product = `${productName} (${productSize}, ${productColor})`;
+            addToCart(product, productPrice);
+            closeProductDetail();
+        }
+
+        // Funktioner för att scrolla produkterna horisontellt
+        function scrollLeft() {
+            document.getElementById('product-container').scrollBy({
+                left: -200,
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollRight() {
+            document.getElementById('product-container').scrollBy({
+                left: 200,
+                behavior: 'smooth'
+            });
+        }
+
+        // Sökfunktion för produkter
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+            const productItems = document.querySelectorAll('.product-item');
+            const searchPopup = document.getElementById('search-popup');
+            let found = false;
+
+            searchPopup.innerHTML = '';
+            productItems.forEach(item => {
+                const productName = item.getAttribute('data-name').toLowerCase();
+                if (productName.includes(searchTerm) && searchTerm) {
+                    const searchResult = document.createElement('p');
+                    searchResult.textContent = item.getAttribute('data-name');
+                    searchResult.onclick = () => openProductDetail(item.getAttribute('data-name'), 299, 'Blå', ['https://via.placeholder.com/300', 'https://via.placeholder.com/300', 'https://via.placeholder.com/300']);
+                    searchPopup.appendChild(searchResult);
+                    found = true;
+                }
+            });
+
+            if (found) {
+                searchPopup.classList.remove('hidden');
+            } else {
+                searchPopup.classList.add('hidden');
+            }
+        }
+    </script>
+
+</body>
+</html>

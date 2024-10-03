@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slutför Betalning - ENDLSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4 flex justify-between items-center text-white">
+        <div class="flex items-center">
+            <h1 class="text-3xl font-bold"><a href="index.html">ENDLSS</a></h1>
+        </div>
+        <ul class="flex space-x-6">
+            <li><a href="index.html" class="hover:text-gray-300">Hem</a></li>
+            <li><a href="index.html#about" class="hover:text-gray-300">Om oss</a></li>
+            <li><a href="index.html#contact" class="hover:text-gray-300">Kontakt</a></li>
+            <li><a href="index.html#faq" class="hover:text-gray-300">FAQ</a></li>
+            <li><a href="checkout.html" class="hover:text-gray-300">Varukorg</a></li>
+        </ul>
+    </nav>
+
+    <!-- Checkout Section -->
+    <section class="container mx-auto mt-8 p-4">
+        <h2 class="text-2xl font-bold mb-6">Slutför Din Betalning</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Produktöversikt -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold mb-4">Din Varukorg</h3>
+                <ul>
+                    <li class="flex justify-between mb-2">
+                        <span>T-shirt (Blå, Storlek M)</span>
+                        <span>299 kr</span>
+                    </li>
+                    <li class="flex justify-between mb-2">
+                        <span>Hoodie (Svart, Storlek L)</span>
+                        <span>499 kr</span>
+                    </li>
+                    <li class="flex justify-between mb-2">
+                        <span>Jeans (Mörkblå, Storlek 32)</span>
+                        <span>699 kr</span>
+                    </li>
+                </ul>
+                <hr class="my-4">
+                <div class="flex justify-between font-bold">
+                    <span>Totalt:</span>
+                    <span>1497 kr</span>
+                </div>
+            </div>
+
+            <!-- Betalningsformulär -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold mb-4">Betalningsinformation</h3>
+                <form>
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700">Fullständigt Namn</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="Skriv ditt namn">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700">E-post</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="Skriv din e-postadress">
+                    </div>
+                    <div class="mb-4">
+                        <label for="card" class="block text-gray-700">Kortnummer</label>
+                        <input type="text" id="card" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="1234 5678 9012 3456">
+                    </div>
+                    <div class="flex justify-between mb-4">
+                        <div class="w-1/2 pr-2">
+                            <label for="expiry" class="block text-gray-700">Utgångsdatum</label>
+                            <input type="text" id="expiry" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="MM/ÅÅ">
+                        </div>
+                        <div class="w-1/2 pl-2">
+                            <label for="cvc" class="block text-gray-700">CVC</label>
+                            <input type="text" id="cvc" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="123">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="address" class="block text-gray-700">Leveransadress</label>
+                        <input type="text" id="address" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" placeholder="Skriv din leveransadress">
+                    </div>
+                    <button class="bg-gray-800 text-white px-6 py-2 rounded-md w-full mt-4">Slutför Betalning</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center p-8 mt-8">
+        <div class="container mx-auto">
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="hover:text-gray-300">Facebook</a>
+                <a href="#" class="hover:text-gray-300">Instagram</a>
+                <a href="#" class="hover:text-gray-300">Twitter</a>
+            </div>
+            <div class="mt-4">
+                <p>Email: info@endlss.com</p>
+                <p>Adress: Storgatan 123, 111 22 Stockholm</p>
+            </div>
+            <div class="mt-4">
+                <p>© 2024 ENDLSS. Alla rättigheter förbehållna.</p>
+                <p>Webbsidan utvecklad av Web Dev Studios</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
